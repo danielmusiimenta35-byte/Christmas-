@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b3d2e">
+<title>🎄 Merry Christmas! 🎅</title>
+<style>
+  :root{
+    --red:#c62828; --red-dark:#8e0000; --green:#1b5e20; --green-dark:#0b3d2e;
+    --gold:#ffd54f; --gold-deep:#ffb300; --white:#fffdf5; --cream:#fff8e1;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(ellipse at 50% -20%, #14532d 0%, #0b3d2e 45%, #06231a 100%);
+    color:var(--white); overflow-x:hidden; min-height:100vh;
+  }
+  /* ---------- Snow canvas ---------- */
+  #snow{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+  /* ---------- Twinkling stars ---------- */
+  .star{position:fixed;color:var(--gold);z-index:1;pointer-events:none;animation:twinkle 2.5s ease-in-out infinite;opacity:.8;text-shadow:0 0 8px rgba(255,213,79,.8);}
+  @keyframes twinkle{0%,100%{opacity:.25;transform:scale(.8) rotate(0deg);}50%{opacity:1;transform:scale(1.15) rotate(20deg);}}
+  /* ---------- Light strings ---------- */
+  .light-string{position:fixed;left:0;right:0;top:0;z-index:2;pointer-events:none;display:flex;justify-content:space-around;padding:6px 10px 0;}
+  .bulb{width:12px;height:18px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;animation:glow 1.6s ease-in-out infinite;box-shadow:0 0 12px 3px currentColor;}
+  .bulb:nth-child(4n+1){color:#ff5252;background:#ff5252;animation-delay:0s;}
+  .bulb:nth-child(4n+2){color:#ffd54f;background:#ffd54f;animation-delay:.4s;}
+  .bulb:nth-child(4n+3){color:#69f0ae;background:#69f0ae;animation-delay:.8s;}
+  .bulb:nth-child(4n+4){color:#40c4ff;background:#40c4ff;animation-delay:1.2s;}
+  @keyframes glow{0%,100%{filter:brightness(.55);}50%{filter:brightness(1.4);}}
+  /* ---------- Layout ---------- */
+  main{position:relative;z-index:5;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:70px 16px 60px;}
+  .screen{display:none;width:100%;max-width:560px;text-align:center;animation:screenIn .8s cubic-bezier(.22,1,.36,1) both;}
+  .screen.active{display:block;}
+  @keyframes screenIn{from{opacity:0;transform:translateY(40px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+  /* ---------- Decorations ---------- */
+  .tree-row{display:flex;justify-content:center;gap:8px;margin-bottom:10px;font-size:clamp(2.4rem,9vw,3.6rem);filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));}
+  .tree-row .t1{animation:sway 4s ease-in-out infinite;transform-origin:bottom center;}
+  .tree-row .t2{animation:sway 4s ease-in-out infinite .8s;transform-origin:bottom center;}
+  @keyframes sway{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+  .bells{font-size:clamp(1.6rem,6vw,2.2rem);animation:ring 2.2s ease-in-out infinite;display:inline-block;}
+  @keyframes ring{0%,100%{transform:rotate(-12deg);}25%{transform:rotate(10deg);}50%{transform:rotate(-8deg);}75%{transform:rotate(12deg);}}
+  /* ---------- Headings ---------- */
+  h1{
+    font-size:clamp(2.2rem,9vw,3.6rem);font-weight:800;line-height:1.15;margin:8px 0 14px;
+    background:linear-gradient(180deg,#fff 10%,var(--gold) 55%,var(--gold-deep) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 30px rgba(255,213,79,.25);
+    animation:headPulse 3s ease-in-out infinite;
+  }
+  @keyframes headPulse{0%,100%{filter:brightness(1);}50%{filter:brightness(1.18);}}
+  .subtitle{font-size:clamp(1rem,4vw,1.2rem);color:var(--cream);opacity:.92;margin-bottom:26px;}
+  /* ---------- Card ---------- */
+  .card{
+    background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.05));
+    border:1px solid rgba(255,213,79,.45);border-radius:22px;padding:26px 22px;
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    box-shadow:0 12px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.15);
+  }
+  .card label{display:block;font-size:1.05rem;margin-bottom:12px;color:var(--cream);}
+  input[type=text]{
+    width:100%;padding:15px 18px;font-size:1.1rem;border-radius:14px;border:2px solid var(--gold);
+    background:rgba(255,255,255,.95);color:#333;text-align:center;outline:none;transition:box-shadow .3s,transform .2s;
+  }
+  input[type=text]:focus{box-shadow:0 0 0 4px rgba(255,213,79,.35);transform:scale(1.02);}
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
+    margin-top:18px;padding:16px 22px;font-size:1.08rem;font-weight:700;color:#fff;
+    border:none;border-radius:14px;cursor:pointer;transition:transform .2s,box-shadow .3s,filter .2s;
+    text-decoration:none;
+  }
+  .btn:active{transform:scale(.96);}
+  .btn-red{background:linear-gradient(180deg,var(--red),var(--red-dark));box-shadow:0 6px 18px rgba(198,40,40,.5);}
+  .btn-red:hover{filter:brightness(1.1);box-shadow:0 8px 24px rgba(198,40,40,.65);transform:translateY(-2px);}
+  .btn-green{background:linear-gradient(180deg,#2e7d32,#1b5e20);box-shadow:0 6px 18px rgba(27,94,32,.5);}
+  .btn-green:hover{filter:brightness(1.1);transform:translateY(-2px);}
+  .btn-wa{background:linear-gradient(180deg,#25d366,#128c4a);box-shadow:0 6px 18px rgba(18,140,74,.5);}
+  .btn-wa:hover{filter:brightness(1.1);transform:translateY(-2px);}
+  /* ---------- Music toggle ---------- */
+  #musicBtn{
+    position:fixed;top:14px;right:14px;z-index:50;width:48px;height:48px;border-radius:50%;
+    border:2px solid var(--gold);background:rgba(0,0,0,.45);color:var(--gold);font-size:1.3rem;
+    cursor:pointer;backdrop-filter:blur(4px);transition:transform .2s;
+  }
+  #musicBtn:active{transform:scale(.9);}
+  #musicBtn.playing{animation:spinSlow 6s linear infinite;}
+  @keyframes spinSlow{to{transform:rotate(360deg);}}
+  /* ---------- Greeting ---------- */
+  .greet-name{
+    font-size:clamp(2rem,9vw,3rem);font-weight:800;display:inline-block;margin:6px 0 4px;
+    background:linear-gradient(90deg,#ffd54f,#fff,#ffd54f);background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 3s linear infinite;
+  }
+  @keyframes shine{to{background-position:200% center;}}
+  .greet-msg{font-size:clamp(1rem,4.2vw,1.15rem);line-height:1.7;color:var(--cream);margin-top:14px;}
+  .greet-msg .heart{display:inline-block;animation:beat 1.2s ease-in-out infinite;}
+  @keyframes beat{0%,100%{transform:scale(1);}25%{transform:scale(1.25);}40%{transform:scale(1);}}
+  .divider{height:2px;width:70%;margin:18px auto 0;border-radius:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+  .hint{font-size:.85rem;opacity:.75;margin-top:10px;}
+  /* ---------- Sparkle burst ---------- */
+  .sparkle{position:fixed;z-index:60;pointer-events:none;font-size:1.2rem;animation:burst 1.4s ease-out forwards;}
+  @keyframes burst{0%{opacity:1;transform:translate(0,0) scale(.5) rotate(0);}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.4) rotate(200deg);}}
+  /* ---------- Snowman corner ---------- */
+  .corner-deco{position:fixed;bottom:6px;left:8px;z-index:2;font-size:2rem;opacity:.9;animation:bob 3s ease-in-out infinite;pointer-events:none;}
+  .corner-deco.right{left:auto;right:8px;animation-delay:1.2s;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  @media (max-height:620px){.tree-row{font-size:2rem;}}
+</style>
+</head>
+<body>
+
+<canvas id="snow"></canvas>
+<div class="light-string" id="lights"></div>
+<button id="musicBtn" title="Toggle music" aria-label="Toggle festive music">🔇</button>
+<div class="corner-deco">⛄</div>
+<div class="corner-deco right">🦌</div>
+
+<main>
+  <!-- SCREEN 1 : Welcome -->
+  <section class="screen active" id="screen-welcome">
+    <div class="tree-row"><span class="t1">🎄</span><span class="t2">🎄</span><span class="t1">🎄</span></div>
+    <h1>Merry Christmas! 🎄</h1>
+    <p class="subtitle"><span class="bells">🔔</span> Welcome to a little corner of Christmas joy <span class="bells">🔔</span></p>
+    <div class="card">
+      <p style="font-size:1.05rem;line-height:1.6;">✨ Snow is falling, lights are glowing, and a special wish is waiting just for you. ✨</p>
+      <button class="btn btn-red" id="btnStart">🎁 Open Your Christmas Surprise 🎁</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2 : Name -->
+  <section class="screen" id="screen-name">
+    <div class="tree-row"><span class="t2">⭐</span><span class="t1">🎄</span><span class="t2">⭐</span></div>
+    <h1>Ho Ho Ho! 🎅</h1>
+    <div class="card">
+      <label for="nameInput">Before we spread some Christmas joy, what's your name?</label>
+      <input type="text" id="nameInput" placeholder="Type your name here…" maxlength="30" autocomplete="off">
+      <button class="btn btn-red" id="btnContinue">Continue ➜</button>
+      <p class="hint">🔒 No accounts, no login — just Christmas magic.</p>
+    </div>
+  </section>
+
+  <!-- SCREEN 3 : Greeting -->
+  <section class="screen" id="screen-greet">
+    <div class="tree-row"><span class="t1">🎄</span><span class="t2">⭐</span><span class="t1">🎄</span></div>
+    <div class="card">
+      <p style="font-size:1.15rem;">Merry Christmas,</p>
+      <span class="greet-name" id="greetName">Friend</span><span style="font-size:1.8rem;"> 🎄🎅</span>
+      <p class="greet-msg">
+        May this wonderful Christmas bring you happiness, peace, love, endless blessings, and beautiful memories.
+        May your dreams come true, and may the coming year be filled with success and new opportunities.<br><br>
+        Wishing you a magical Christmas and a Happy New Year! <span class="heart">❤️</span>
+      </p>
+      <div class="divider"></div>
+      <button class="btn btn-wa" id="btnWhatsApp">💬 Share Christmas Wishes on WhatsApp</button>
+      <button class="btn btn-green" id="btnAgain">🔁 Send Wishes to Someone Else</button>
+    </div>
+  </section>
+</main>
+
+<script>
+/* =============== CONFIG =============== */
+/* Replace with your live website URL so shared links open this site. */
+var SITE_URL = (location.protocol.indexOf('http') === 0) ? location.href.split('?')[0] : 'https://your-christmas-wishes-site.com';
+
+/* =============== SNOW =============== */
+(function(){
+  var cv=document.getElementById('snow'),ctx=cv.getContext('2d'),flakes=[],W,H;
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+  addEventListener('resize',resize);resize();
+  var COUNT = Math.min(160, Math.floor(innerWidth/6));
+  for(var i=0;i<COUNT;i++)flakes.push(newFlake(true));
+  function newFlake(init){
+    return {x:Math.random()*W, y:init?Math.random()*H:-10, r:1+Math.random()*3,
+            sp:.4+Math.random()*1.4, drift:Math.random()*Math.PI*2, ds:.005+Math.random()*.02,
+            o:.4+Math.random()*.6};
+  }
+  (function loop(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#fff';
+    for(var i=0;i<flakes.length;i++){
+      var f=flakes[i];
+      f.y+=f.sp; f.drift+=f.ds; f.x+=Math.sin(f.drift)*.6;
+      if(f.y>H+10){flakes[i]=newFlake(false);continue;}
+      ctx.globalAlpha=f.o;
+      ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,Math.PI*2);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* =============== LIGHTS + STARS =============== */
+(function(){
+  var ls=document.getElementById('lights');
+  var n=Math.max(8,Math.floor(innerWidth/45));
+  for(var i=0;i<n;i++){var b=document.createElement('div');b.className='bulb';ls.appendChild(b);}
+  var chars=['✦','❄','⭐','✧'];
+  for(var j=0;j<14;j++){
+    var s=document.createElement('div');s.className='star';
+    s.textContent=chars[Math.floor(Math.random()*chars.length)];
+    s.style.left=(Math.random()*92+2)+'vw';
+    s.style.top=(Math.random()*75+8)+'vh';
+    s.style.animationDelay=(Math.random()*2.5)+'s';
+    s.style.fontSize=(0.7+Math.random()*1.1)+'rem';
+    document.body.appendChild(s);
+  }
+})();
+
+/* =============== FESTIVE MUSIC (Web Audio, no files needed) =============== */
+var Music=(function(){
+  var ctx=null,playing=false,timer=null,btn=document.getElementById('musicBtn');
+  // Jingle Bells: [note(Hz), beats]
+  var N={C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392.00,A4:440.00,B4:493.88,C5:523.25,D5:587.33,E5:659.25,F5:698.46,G5:783.99};
+  var song=[
+    [N.E4,1],[N.E4,1],[N.E4,2],[N.E4,1],[N.E4,1],[N.E4,2],
+    [N.E4,1],[N.G4,1],[N.C4,1.5],[N.D4,.5],[N.E4,4],
+    [N.F4,1],[N.F4,1],[N.F4,1.5],[N.F4,.5],[N.F4,1],[N.E4,1],[N.E4,1],[N.E4,.5],[N.E4,.5],
+    [N.E4,1],[N.D4,1],[N.D4,1],[N.E4,1],[N.D4,2],[N.G4,2]
+  ];
+  var beat=0.32;
+  function note(freq,t,dur){
+    var o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='triangle';o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(0.22,t+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+dur*0.95);
+    o.connect(g);g.connect(ctx.destination);
+    o.start(t);o.stop(t+dur);
+  }
+  function playLoop(){
+    var t=ctx.currentTime+0.05,total=0;
+    for(var rep=0;rep<2;rep++){
+      song.forEach(function(p){note(p[0],t+total,p[1]*beat);total+=p[1]*beat;});
+    }
+    timer=setTimeout(function(){if(playing)playLoop();},total*1000);
+  }
+  btn.addEventListener('click',function(){
+    if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();
+    if(ctx.state==='suspended')ctx.resume();
+    playing=!playing;
+    if(playing){btn.textContent='🔊';btn.classList.add('playing');playLoop();}
+    else{btn.textContent='🔇';btn.classList.remove('playing');clearTimeout(timer);}
+  });
+  return {};
+})();
+
+/* =============== SCREEN FLOW =============== */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById(id);
+  void el.offsetWidth; /* restart animation */
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function sparkleBurst(x,y){
+  var chars=['❄','⭐','✨','🔔','🎄'];
+  for(var i=0;i<14;i++){
+    var s=document.createElement('div');s.className='sparkle';
+    s.textContent=chars[Math.floor(Math.random()*chars.length)];
+    s.style.left=x+'px';s.style.top=y+'px';
+    var a=Math.random()*Math.PI*2,d=60+Math.random()*120;
+    s.style.setProperty('--dx',Math.cos(a)*d+'px');
+    s.style.setProperty('--dy',Math.sin(a)*d+'px');
+    document.body.appendChild(s);
+    (function(el){setTimeout(function(){el.remove();},1500);})(s);
+  }
+}
+var visitorName='';
+
+document.getElementById('btnStart').addEventListener('click',function(e){
+  sparkleBurst(e.clientX||innerWidth/2,e.clientY||innerHeight/2);
+  showScreen('screen-name');
+  setTimeout(function(){document.getElementById('nameInput').focus();},450);
+});
+
+function proceed(){
+  var v=document.getElementById('nameInput').value.trim();
+  visitorName=v?v:'Friend';
+  document.getElementById('greetName').textContent=visitorName;
+  sparkleBurst(innerWidth/2,innerHeight/3);
+  showScreen('screen-greet');
+}
+document.getElementById('btnContinue').addEventListener('click',proceed);
+document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')proceed();});
+
+/* =============== WHATSAPP SHARING =============== */
+document.getElementById('btnWhatsApp').addEventListener('click',function(e){
+  sparkleBurst(e.clientX||innerWidth/2,e.clientY||innerHeight/2);
+  var msg =
+"Merry Christmas, "+visitorName+"! 🎄🎅\n\n"+
+"May this wonderful Christmas bring you happiness, peace, love, endless blessings, and beautiful memories. "+
+"May your dreams come true, and may the coming year be filled with success and new opportunities.\n\n"+
+"Wishing you a magical Christmas and a Happy New Year! ❤️\n\n"+
+"✨ Get your own personalized Christmas wish here:\n"+SITE_URL;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+});
+
+document.getElementById('btnAgain').addEventListener('click',function(){
+  document.getElementById('nameInput').value='';
+  showScreen('screen-name');
+  setTimeout(function(){document.getElementById('nameInput').focus();},450);
+});
+</script>
+</body>
+</html>
